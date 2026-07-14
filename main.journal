@@ -1,0 +1,69 @@
+; ============================================================
+; inventory.journal — hledger file for tracking a small product inventory
+; Full pipeline:
+;   Supplier -> InTransit -> Inbound dock -> Bin (storage location)
+;   Bin -> Outbound staging -> Shipped -> Delivered/Invoiced (AR) -> Paid
+; ============================================================
+; Run `hledger -f inventory.journal ...` or set:
+;   export LEDGER_FILE=inventory.journal
+; ============================================================
+
+; ---- Commodity formats ----
+; Your money commodity: adjust EUR to whatever you use.
+commodity 1000.00 EUR
+
+; One commodity per product you stock. Rename/add as needed.
+commodity 1. WIDGET
+commodity 1. GADGET
+
+; ---- Account declarations ----
+; Declaring accounts lets hledger warn you about typos (`hledger check accounts`).
+; Bin accounts: only declare the ones you actually use — you don't need to
+; pre-declare every possible bin in the warehouse, just add a line as new
+; bins come into use.
+
+account Assets:Bank:Checking
+account Assets:Accounts Receivable
+account Assets:Accounts Receivable:CustomerA
+account Assets:Accounts Receivable:CustomerB
+
+account Assets:Recoverable VAT:Input Tax on Purchases
+
+account Liabilities:Accounts Payable
+account Liabilities:Accounts Payable:Supplier ABC
+account Liabilities:Accounts Payable:Supplier XYZ
+
+account Liabilities:VAT:Output Tax on Sales
+
+; Ordered from supplier, not yet arrived
+account Assets:Inventory:InTransit
+
+; Arrived at the warehouse dock, not yet put away
+account Assets:Inventory:Warehouse:Inbound
+
+; Put away in a specific bin location — this is where "where is it stored" lives
+; You can have as many bins as you need, just add a new account line for each
+; new bin.
+; It can be helpful to include the bin location in the account name, e.g.
+; "Bin:A1" or "Bin:B2". Where you put the product in the warehouse is up to you,
+; but it's a good idea to have a consistent naming scheme for bins so you can
+; easily find things later. For example, you might use "Bin:A1" for the first
+; bin in aisle A, "Bin:B2" for the second bin in aisle B, etc.
+account Assets:Inventory:Warehouse:Bin:A1
+account Assets:Inventory:Warehouse:Bin:B1
+account Assets:Inventory:Warehouse:Bin:B2
+
+; Picked from a bin, staged for shipment, not yet left the building
+account Assets:Inventory:Warehouse:Outbound
+
+; Left the warehouse, en route to a customer, not yet delivered/invoiced
+account Assets:Inventory:Shipped
+account Equity:Opening Balances
+account Income:Sales
+account Expenses:Cost of Goods Sold
+
+include opening.journal
+include purchasing.journal
+include invoicing.journal
+include transfers.journal
+include prices.journal

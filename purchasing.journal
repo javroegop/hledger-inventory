@@ -1,0 +1,18 @@
+2026-01-03 Supplier XYZ | Order widgets from supplier, net-30 terms ; order:123
+    Assets:Inventory:InTransit                           50 WIDGET @@ 200.00 EUR
+    Assets:Recoverable VAT:Input Tax on Purchases                      40.00 EUR
+    Liabilities:Accounts Payable:Supplier XYZ                        -240.00 EUR
+
+2026-01-04 Supplier ABC | Order gadgets from supplier, net-30 terms ; order:456
+    Assets:Inventory:InTransit                           20 GADGET @@ 200.00 EUR
+    Assets:Recoverable VAT:Input Tax on Purchases                      40.00 EUR
+    Liabilities:Accounts Payable:Supplier ABC                        -240.00 EUR
+
+2026-02-02 Supplier XYZ | Pay supplier invoice for widgets ; order:123
+    Liabilities:Accounts Payable:Supplier XYZ                         240.00 EUR
+    Assets:Bank:Checking                                             -240.00 EUR
+
+2026-02-03 Supplier ABC | Pay supplier invoice for gadgets ; order:456
+    Liabilities:Accounts Payable:Supplier ABC                         240.00 EUR
+    Assets:Bank:Checking                                             -240.00 EUR
+
