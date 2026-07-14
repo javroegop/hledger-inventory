@@ -1,0 +1,32 @@
+2026-01-08 Widgets arrive at warehouse inbound dock ; order:123
+    Assets:Inventory:Warehouse:Inbound                      50 WIDGET @ 4.00 EUR
+    Assets:Inventory:InTransit                             -50 WIDGET @ 4.00 EUR
+
+2026-01-08 Put away widgets in bin A1 ; order:123
+    Assets:Inventory:Warehouse:Bin:A1                       50 WIDGET @ 4.00 EUR
+    Assets:Inventory:Warehouse:Inbound                     -50 WIDGET @ 4.00 EUR
+
+2026-01-09 Gadgets arrive at warehouse inbound dock ; order:456
+    Assets:Inventory:Warehouse:Inbound                     20 GADGET @ 10.00 EUR
+    Assets:Inventory:InTransit                            -20 GADGET @ 10.00 EUR
+
+2026-01-09 Put away gadgets in bins B1 and B2
+    Assets:Inventory:Warehouse:Bin:B1                      12 GADGET @ 10.00 EUR
+    Assets:Inventory:Warehouse:Bin:B2                       8 GADGET @ 10.00 EUR
+    Assets:Inventory:Warehouse:Inbound                    -20 GADGET @ 10.00 EUR
+
+2026-01-10 Pick 10 widgets from bin A1 for an order
+    Assets:Inventory:Warehouse:Outbound                     10 WIDGET @ 4.00 EUR
+    Assets:Inventory:Warehouse:Bin:A1                      -10 WIDGET @ 4.00 EUR
+
+2026-01-11 Ship 10 widgets to customer
+    Assets:Inventory:Shipped                                10 WIDGET @ 4.00 EUR
+    Assets:Inventory:Warehouse:Outbound                    -10 WIDGET @ 4.00 EUR
+
+2026-01-15 Pick 5 gadgets from bin B1 for an order
+    Assets:Inventory:Warehouse:Outbound                     5 GADGET @ 10.00 EUR
+    Assets:Inventory:Warehouse:Bin:B1                      -5 GADGET @ 10.00 EUR
+
+2026-01-16 Ship 5 gadgets to customer
+    Assets:Inventory:Shipped                                5 GADGET @ 10.00 EUR
+    Assets:Inventory:Warehouse:Outbound                    -5 GADGET @ 10.00 EUR
