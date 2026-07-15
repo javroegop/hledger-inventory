@@ -32,6 +32,7 @@ import re
 import subprocess
 import sys
 from collections import defaultdict
+from dataclasses import dataclass
 from decimal import Decimal
 
 
@@ -148,35 +149,44 @@ def print_csv(all_account_rows):
         writer.writerow((row["account"], row["commodity"], row["quantity"], row["cost"], row["value"]))
 
 
-def main():
-    args = sys.argv[1:]
-    if "-h" in args or "--help" in args:
-        print(__doc__.strip())
-        return
+@dataclass
+class Args:
+    journal_file: str
+    query: str
+    csv_output: bool
+    wanted_commodities: set | None
+
+
+def parse_args(argv):
+    argv = list(argv)
     journal_file = "main.journal"
-    if "-f" in args:
-        i = args.index("-f")
-        journal_file = args[i + 1]
-        del args[i : i + 2]
-    csv_output = "--csv" in args
+    if "-f" in argv:
+        i = argv.index("-f")
+        journal_file = argv[i + 1]
+        del argv[i : i + 2]
+    csv_output = "--csv" in argv
     if csv_output:
-        args.remove("--csv")
+        argv.remove("--csv")
     wanted_commodities = None
-    if "--commodity" in args:
-        i = args.index("--commodity")
-        wanted_commodities = set(args[i + 1].split(","))
-        del args[i : i + 2]
-    query = args[0] if args else "Assets:Inventory"
+    if "--commodity" in argv:
+        i = argv.index("--commodity")
+        wanted_commodities = set(argv[i + 1].split(","))
+        del argv[i : i + 2]
+    query = argv[0] if argv else "Assets:Inventory"
+    return Args(journal_file, query, csv_output, wanted_commodities)
 
-    available_commodities = commodities_in(journal_file, query)
-    if wanted_commodities is not None:
-        unknown = wanted_commodities - set(available_commodities)
-        if unknown:
-            print(f"warning: no data for commodity/commodities: {', '.join(sorted(unknown))}", file=sys.stderr)
-        commodities = sorted(c for c in available_commodities if c in wanted_commodities)
-    else:
-        commodities = sorted(available_commodities)
 
+def resolve_commodities(available_commodities, wanted_commodities):
+    if wanted_commodities is None:
+        return sorted(available_commodities)
+    unknown = wanted_commodities - set(available_commodities)
+    if unknown:
+        print(f"warning: no data for commodity/commodities: {', '.join(sorted(unknown))}", file=sys.stderr)
+    return sorted(c for c in available_commodities if c in wanted_commodities)
+
+
+def gather_report_data(journal_file, query, commodities):
+    """Fetch and group per-commodity rows, and accumulate grand totals by currency."""
     cost_sums = defaultdict(Decimal)
     value_sums = defaultdict(Decimal)
     groups = []
@@ -191,8 +201,21 @@ def main():
         if value_total_row is not None:
             amount, currency = parse_amount(value_total_row)
             value_sums[currency] += amount
+    return groups, all_account_rows, cost_sums, value_sums
 
-    if csv_output:
+
+def main():
+    argv = sys.argv[1:]
+    if "-h" in argv or "--help" in argv:
+        print(__doc__.strip())
+        return
+
+    args = parse_args(argv)
+    available_commodities = commodities_in(args.journal_file, args.query)
+    commodities = resolve_commodities(available_commodities, args.wanted_commodities)
+    groups, all_account_rows, cost_sums, value_sums = gather_report_data(args.journal_file, args.query, commodities)
+
+    if args.csv_output:
         print_csv(all_account_rows)
     else:
         grand_total_row = ("Total (all commodities):", "", format_sums(cost_sums), format_sums(value_sums))
