@@ -3,6 +3,7 @@
 ; Full pipeline:
 ;   Supplier -> InTransit -> Inbound dock -> Bin (storage location)
 ;   Bin -> Outbound staging -> Shipped -> Delivered/Invoiced (AR) -> Paid
+;   Any stage -> broken/damaged -> written off (see damaged.journal)
 ; ============================================================
 ; Run `hledger -f inventory.journal ...` or set:
 ;   export LEDGER_FILE=inventory.journal
@@ -61,9 +62,11 @@ account Assets:Inventory:Shipped
 account Equity:Opening Balances
 account Income:Sales
 account Expenses:Cost of Goods Sold
+account Expenses:Inventory Write-offs
 
 include opening.journal
 include purchasing.journal
 include invoicing.journal
 include transfers.journal
 include prices.journal
+include damaged.journal

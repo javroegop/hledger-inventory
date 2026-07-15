@@ -1,0 +1,20 @@
+; ============================================================
+; damaged.journal — write off broken/damaged inventory
+; Move the broken quantity out of wherever it currently sits (a bin, the
+; inbound dock, outbound staging, etc.) into an expense account, at the
+; same per-unit cost it's carried at. This works from any pipeline stage —
+; just point the negative posting at whichever account currently holds it.
+;
+; No VAT adjustment is needed here: input VAT was already reclaimed on
+; purchase, and scrapping stock isn't a taxable supply in most
+; jurisdictions. Check with your accountant if you're unsure, especially
+; if the goods are destroyed rather than simply devalued.
+; ============================================================
+
+2026-02-10 Found 3 broken widgets during stock check in bin A1 ; order:123
+    Expenses:Inventory Write-offs                            3 WIDGET @ 4.00 EUR
+    Assets:Inventory:Warehouse:Bin:A1                       -3 WIDGET @ 4.00 EUR
+
+2026-02-14 Found 1 broken gadget during stock check in bin B2 ; order:456
+    Expenses:Inventory Write-offs                            1 GADGET @ 10.00 EUR
+    Assets:Inventory:Warehouse:Bin:B2                       -1 GADGET @ 10.00 EUR
