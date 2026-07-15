@@ -1,5 +1,7 @@
 # hledger-inventory
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A small, plain-text inventory and bookkeeping system built on [hledger](https://hledger.org), plus a helper script for inventory valuation reports.
 
 It tracks physical goods (received, stored, shipped, sold, written off) alongside the corresponding money-side bookkeeping (accounts payable/receivable, VAT, cost of goods sold) in a single double-entry ledger.
