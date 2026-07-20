@@ -1,0 +1,18 @@
+# Purchases rules
+
+# Skip header line
+skip 1
+
+# Field names
+fields date,supplier,order,product,quantity,unit_price,total,vat,total_with_vat
+
+description %supplier | Order %quantity %product
+comment order:%order
+
+account1 Assets:Inventory:InTransit
+account2 Assets:Recoverable VAT:Input Tax on Purchases
+account3 Liabilities:Accounts Payable:%supplier
+
+amount1 %quantity %product @@ %total
+amount2 %vat
+amount3 -%total_with_vat

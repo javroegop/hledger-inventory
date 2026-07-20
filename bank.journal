@@ -1,0 +1,16 @@
+2026-01-20 Customer pays widget invoice ; invoice:123456
+    Assets:Bank:Checking                                               96.00 EUR
+    Assets:Accounts Receivable                                        -96.00 EUR
+
+2026-01-25 Customer pays gadget invoice ; invoice:123457
+    Assets:Bank:Checking                                               90.00 EUR
+    Assets:Accounts Receivable                                        -90.00 EUR
+
+2026-02-02 Supplier XYZ | Pay supplier invoice for widgets ; order:123
+    Liabilities:Accounts Payable:Supplier XYZ                         240.00 EUR
+    Assets:Bank:Checking                                             -240.00 EUR
+
+2026-02-03 Supplier ABC | Pay supplier invoice for gadgets ; order:456
+    Liabilities:Accounts Payable:Supplier ABC                         240.00 EUR
+    Assets:Bank:Checking                                             -240.00 EUR
+

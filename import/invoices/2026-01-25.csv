@@ -1,0 +1,3 @@
+date,customer,invoice,product,quantity,unit_cost,unit_price,total,vat,total_with_vat
+2026-01-20,CustomerA,123456,WIDGET,10,4.00,8.00,80.00,16.00,96.00
+2026-01-25,CustomerB,123457,GADGET,5,10.00,15.00,75.00,15.00,90.00

@@ -1,0 +1,48 @@
+# Transfer rules
+
+# Skip header line
+skip 1
+
+# Field names
+fields date,from,to,product,quantity,order,invoice
+
+# Rules
+if %from InTransit
+    account2 Assets:Inventory:InTransit
+
+if %from Inbound
+    account2 Inventory:Warehouse:Inbound
+
+if %from [AB][0-9]+
+    account2 Inventory:Warehouse:Bin:%from
+
+if %from Outbound
+    account2 Inventory:Warehouse:Outbound
+
+if %to Inbound
+    description Received %quantity %product
+    account1 Assets:Warehouse:Inbound
+
+if %to [AB][0-9]+
+    description Put away %quantity %product in BIN %to
+    account1 Inventory:Warehouse:Bin:%to
+
+if %to Outbound
+    description Prepare for shipping %quantity %product
+    account1 Inventory:Warehouse:Outbound
+
+if %to Outbound && %from [AB][0-9]+
+    description Prepare for shipping %quantity %product from BIN %from
+
+if %to Shipped
+    description Shipped %quantity %product
+    account1 Inventory:Shipped
+
+amount1 %quantity %product
+amount2 -%quantity %product
+
+if %order ^.+$
+    comment order:%order
+
+if %invoice ^.+$
+    comment invoice:%invoice
