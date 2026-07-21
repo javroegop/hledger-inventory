@@ -16,5 +16,5 @@
     Assets:Inventory:Warehouse:Bin:A1                       -3 WIDGET @ 4.00 EUR
 
 2026-02-14 Found 1 broken gadget during stock check in bin B2 ; order:456
-    Expenses:Inventory Write-offs                            1 GADGET @ 10.00 EUR
-    Assets:Inventory:Warehouse:Bin:B2                       -1 GADGET @ 10.00 EUR
+    Expenses:Inventory Write-offs                           1 GADGET @ 10.00 EUR
+    Assets:Inventory:Warehouse:Bin:B2                      -1 GADGET @ 10.00 EUR
