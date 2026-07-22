@@ -4,7 +4,7 @@
 skip 1
 
 # Field names
-fields date,from,to,product,quantity,order,invoice
+fields date,from,to,product,quantity,unit_cost,order,invoice
 
 # Rules
 if %from InTransit
@@ -38,8 +38,8 @@ if %to Shipped
     description Shipped %quantity %product
     account1 Inventory:Shipped
 
-amount1 %quantity %product
-amount2 -%quantity %product
+amount1 %quantity %product @ %unit_cost EUR
+amount2 -%quantity %product @ %unit_cost EUR
 
 if %order ^.+$
     comment order:%order
