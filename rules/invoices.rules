@@ -1,0 +1,26 @@
+# Invoices rules
+
+# Skip header line
+skip 1
+
+# Field names
+fields date,customer,invoice,product,quantity,unit_cost,unit_price,total,vat,total_with_vat
+
+# Accounts
+account1 Assets:Accounts Receivable
+account2 Income:Sales
+account3 Expenses:Cost of Goods Sold
+account4 Liabilities:VAT:Output Tax on Sales
+account5 Assets:Inventory:Shipped
+
+# date format
+date-format %Y-%m-%d
+
+description %customer | %quantity %product
+comment invoice:%invoice
+
+amount1 %total_with_vat
+amount2 -%total
+amount3 %quantity %product @@ %unit_cost
+amount4 -%vat
+amount5 -%quantity %product @@ %unit_cost

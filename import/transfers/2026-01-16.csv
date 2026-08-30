@@ -1,0 +1,10 @@
+date,from,to,product,quantity,unit_cost,order,invoice
+2026-01-08,InTransit,Inbound,WIDGET,50,4.00,123
+2026-01-08,Inbound,A1,WIDGET,50,4.00,123
+2026-01-09,InTransit,Inbound,GADGET,20,10.00,456
+2026-01-09,Inbound,B1,GADGET,12,10.00,456
+2026-01-09,Inbound,B2,GADGET,8,10.00,456
+2026-01-10,A1,Outbound,WIDGET,10,4.00,123456
+2026-01-11,Outbound,Shipped,WIDGET,10,4.00,,123456
+2026-01-15,B1,Outbound,GADGET,5,10.00,,123457
+2026-01-16,Outbound,Shipped,GADGET,5,10.00,,123457

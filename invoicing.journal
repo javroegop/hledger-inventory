@@ -1,21 +1,15 @@
-2026-01-13 Widgets delivered, invoice issued to customer ; invoice:123456
+2026-01-13 Widgets delivered, invoice issued to CustomerA ; invoice:123456
     Assets:Accounts Receivable                                         96.00 EUR
-    Income:Sales                                                      -80.00 EUR
+    Income:Sales:CustomerA                                            -80.00 EUR
     Expenses:Cost of Goods Sold                           10 WIDGET @@ 40.00 EUR
     Liabilities:VAT:Output Tax on Sales                               -16.00 EUR
     Assets:Inventory:Shipped                             -10 WIDGET @@ 40.00 EUR
 
-2026-01-18 Gadgets delivered, invoice issued to customer ; invoice:123457
+2026-01-18 Gadgets delivered, invoice issued to CustomerB ; invoice:123457
     Assets:Accounts Receivable                                         90.00 EUR
-    Income:Sales                                                      -75.00 EUR
+    Income:Sales:CustomerB                                            -75.00 EUR
     Expenses:Cost of Goods Sold                            5 GADGET @@ 50.00 EUR
     Liabilities:VAT:Output Tax on Sales                               -15.00 EUR
     Assets:Inventory:Shipped                              -5 GADGET @@ 50.00 EUR
 
-2026-01-20 Customer pays widget invoice ; invoice:123456
-    Assets:Bank:Checking                                               96.00 EUR
-    Assets:Accounts Receivable                                        -96.00 EUR
 
-2026-01-25 Customer pays gadget invoice ; invoice:123457
-    Assets:Bank:Checking                                               90.00 EUR
-    Assets:Accounts Receivable                                        -90.00 EUR

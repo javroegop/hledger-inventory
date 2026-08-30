@@ -61,10 +61,13 @@ account Assets:Inventory:Warehouse:Outbound
 account Assets:Inventory:Shipped
 account Equity:Opening Balances
 account Income:Sales
+account Income:Sales:CustomerA
+account Income:Sales:CustomerB
 account Expenses:Cost of Goods Sold
 account Expenses:Inventory Write-offs
 
 include opening.journal
+include bank.journal
 include purchasing.journal
 include invoicing.journal
 include transfers.journal

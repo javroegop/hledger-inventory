@@ -1,0 +1,6 @@
+transaction,date,name,description,amount
+1,2026-01-20,Customer,Invoice 123456,96.00
+2,2026-01-25,Customer,Invoice 123457,90.00
+3,2026-02-02,Supplier XYZ,Order 123,-240.00
+4,2026-02-03,Supplier ABC,Order 456,-240.00
+

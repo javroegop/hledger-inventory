@@ -1,0 +1,35 @@
+# Bank rules
+
+# Skip header line
+skip 1
+
+# Field names
+fields transaction,date,name,description,amount
+
+# default account1
+account1 Assets:Bank:Checking
+
+# date format
+date-format %Y-%m-%d
+
+amount %amount EUR
+
+if %name Customer
+    description %name | %description
+    account2 Assets:Accounts Receivable
+
+if %name Customer && %description ([1-9][0-9]{5})
+    comment invoice:\1
+
+if %name Supplier
+    description %name | %description
+
+if %name Supplier && %description ([1-9][0-9]{2,})
+    comment order:\1
+
+if %name Supplier ABC
+    account2 Liabilities:Accounts Payable:Supplier ABC
+
+if %name Supplier XYZ
+    account2 Liabilities:Accounts Payable:Supplier XYZ
+
